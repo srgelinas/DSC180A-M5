@@ -1,0 +1,10 @@
+0	train	clickbait
+1	train	clickbait
+2	train	clickbait
+3	train	nonclickbait
+4	train	nonclickbait
+5	train	nonclickbait
+6	test	clickbait
+7	test	clickbait
+8	test	nonclickbait
+9	test	nonclickbait

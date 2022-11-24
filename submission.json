@@ -1,0 +1,4 @@
+{
+    "dockerhub-id": "srgelinas/dsc180a_m5:latest",
+    "build-script": "python run.py test"
+}

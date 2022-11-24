@@ -27,7 +27,10 @@ def build(dataset):
     doc_train_list = []
     doc_test_list = []
 
-    f = open('data/' + dataset + '.txt', 'r')
+    if dataset == 'test':
+        f = open('test/testdata/' + dataset + '.txt', 'r')
+    else:
+        f = open('data/' + dataset + '.txt', 'r')
     lines = f.readlines()
     for line in lines:
         doc_name_list.append(line.strip())
@@ -41,7 +44,10 @@ def build(dataset):
     # print(doc_test_list)
 
     doc_content_list = []
-    f = open('data/corpus/' + dataset + '.clean.txt', 'r')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '.clean.txt', 'r')
+    else:
+        f = open('data/corpus/' + dataset + '.clean.txt', 'r')
     lines = f.readlines()
     for line in lines:
         doc_content_list.append(line.strip())
@@ -59,7 +65,10 @@ def build(dataset):
     #train_ids = train_ids[:int(0.2 * len(train_ids))]
 
     train_ids_str = '\n'.join(str(index) for index in train_ids)
-    f = open('data/output/' + dataset + '.train.index', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '.train.index', 'w')
+    else:
+        f = open('data/output/' + dataset + '.train.index', 'w')
     f.write(train_ids_str)
     f.close()
 
@@ -71,7 +80,10 @@ def build(dataset):
     random.shuffle(test_ids)
 
     test_ids_str = '\n'.join(str(index) for index in test_ids)
-    f = open('data/output/' + dataset + '.test.index', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '.test.index', 'w')
+    else:
+        f = open('data/output/' + dataset + '.test.index', 'w')
     f.write(test_ids_str)
     f.close()
 
@@ -87,11 +99,17 @@ def build(dataset):
     shuffle_doc_name_str = '\n'.join(shuffle_doc_name_list)
     shuffle_doc_words_str = '\n'.join(shuffle_doc_words_list)
 
-    f = open('data/output/' + dataset + '_shuffle.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '_shuffle.txt', 'w')
+    else:
+        f = open('data/output/' + dataset + '_shuffle.txt', 'w')
     f.write(shuffle_doc_name_str)
     f.close()
 
-    f = open('data/corpus/' + dataset + '_shuffle.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '_shuffle.txt', 'w')
+    else:
+        f = open('data/corpus/' + dataset + '_shuffle.txt', 'w')
     f.write(shuffle_doc_words_str)
     f.close()
 
@@ -137,7 +155,10 @@ def build(dataset):
 
     vocab_str = '\n'.join(vocab)
 
-    f = open('data/corpus/' + dataset + '_vocab.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '_vocab.txt', 'w')
+    else:
+        f = open('data/corpus/' + dataset + '_vocab.txt', 'w')
     f.write(vocab_str)
     f.close()
 
@@ -196,7 +217,10 @@ def build(dataset):
     label_list = list(label_set)
 
     label_list_str = '\n'.join(label_list)
-    f = open('data/corpus/' + dataset + '_labels.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '_labels.txt', 'w')
+    else:
+        f = open('data/corpus/' + dataset + '_labels.txt', 'w')
     f.write(label_list_str)
     f.close()
 
@@ -210,7 +234,10 @@ def build(dataset):
     real_train_doc_names = shuffle_doc_name_list[:real_train_size]
     real_train_doc_names_str = '\n'.join(real_train_doc_names)
 
-    f = open('data/output/' + dataset + '.real_train.name', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '_real_train.name', 'w')
+    else:
+        f = open('data/output/' + dataset + '.real_train.name', 'w')
     f.write(real_train_doc_names_str)
     f.close()
 
@@ -485,30 +512,51 @@ def build(dataset):
         (weight, (row, col)), shape=(node_size, node_size))
 
     # dump objects
-    f = open("data/output/ind.{}.x".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.x'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.x".format(dataset), 'wb')
     pkl.dump(x, f)
     f.close()
 
-    f = open("data/output/ind.{}.y".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.y'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.y".format(dataset), 'wb')
     pkl.dump(y, f)
     f.close()
 
-    f = open("data/output/ind.{}.tx".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.tx'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.tx".format(dataset), 'wb')
     pkl.dump(tx, f)
     f.close()
 
-    f = open("data/output/ind.{}.ty".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.ty'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.ty".format(dataset), 'wb')
     pkl.dump(ty, f)
     f.close()
 
-    f = open("data/output/ind.{}.allx".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.allx'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.allx".format(dataset), 'wb')
     pkl.dump(allx, f)
     f.close()
 
-    f = open("data/output/ind.{}.ally".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.ally'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.ally".format(dataset), 'wb')
     pkl.dump(ally, f)
     f.close()
 
-    f = open("data/output/ind.{}.adj".format(dataset), 'wb')
+    if dataset == 'test':
+        f = open('test/testdata/output/ind.{}.adj'.format(dataset), 'wb')
+    else:
+        f = open("data/output/ind.{}.adj".format(dataset), 'wb')
     pkl.dump(adj, f)
     f.close()

@@ -131,12 +131,21 @@ def load_corpus(dataset_str):
 
     names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'adj']
     objects = []
-    for i in range(len(names)):
-        with open("data/output/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
-            if sys.version_info > (3, 0):
-                objects.append(pkl.load(f, encoding='latin1'))
-            else:
-                objects.append(pkl.load(f))
+
+    if dataset_str == 'test':
+        for i in range(len(names)):
+            with open("test/testdata/output/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
+                if sys.version_info > (3, 0):
+                    objects.append(pkl.load(f, encoding='latin1'))
+                else:
+                    objects.append(pkl.load(f))
+    else:
+        for i in range(len(names)):
+            with open("data/output/ind.{}.{}".format(dataset_str, names[i]), 'rb') as f:
+                if sys.version_info > (3, 0):
+                    objects.append(pkl.load(f, encoding='latin1'))
+                else:
+                    objects.append(pkl.load(f))
 
     x, y, tx, ty, allx, ally, adj = tuple(objects)
     print(x.shape, y.shape, tx.shape, ty.shape, allx.shape, ally.shape)
@@ -145,8 +154,12 @@ def load_corpus(dataset_str):
     labels = np.vstack((ally, ty))
     print(len(labels))
 
-    train_idx_orig = parse_index_file(
-        "data/output/{}.train.index".format(dataset_str))
+    if dataset_str == 'test':
+        train_idx_orig = parse_index_file(
+        "test/testdata/output/{}.train.index".format(dataset_str))
+    else:
+        train_idx_orig = parse_index_file(
+            "data/output/{}.train.index".format(dataset_str))
     train_size = len(train_idx_orig)
 
     val_size = train_size - x.shape[0]

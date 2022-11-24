@@ -10,7 +10,11 @@ from utils import clean_str, loadWord2Vec
 sys.path.insert(0, cwd)
 
 
-def prepare(dataset):
+def clean(dataset):
+    num = 5
+    if dataset == 'test':
+        num = 1
+
     nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
     print(stop_words)
@@ -22,7 +26,10 @@ def prepare(dataset):
     # dataset = '20ng'
 
     doc_content_list = []
-    f = open('data/corpus/' + dataset + '.txt', 'rb')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '.txt', 'rb')
+    else:
+        f = open('data/corpus/' + dataset + '.txt', 'rb')
     # f = open('data/wiki_long_abstracts_en_text.txt', 'r')
     for line in f.readlines():
         doc_content_list.append(line.strip().decode('latin1'))
@@ -39,7 +46,7 @@ def prepare(dataset):
                 word_freq[word] += 1
             else:
                 word_freq[word] = 1
-
+    
     clean_docs = []
     for doc_content in doc_content_list:
         temp = clean_str(doc_content)
@@ -49,7 +56,7 @@ def prepare(dataset):
             # word not in stop_words and word_freq[word] >= 5
             if dataset == 'mr':
                 doc_words.append(word)
-            elif word not in stop_words and word_freq[word] >= 5:
+            elif word not in stop_words and word_freq[word] >= num:
                 doc_words.append(word)
 
         doc_str = ' '.join(doc_words).strip()
@@ -59,7 +66,10 @@ def prepare(dataset):
 
     clean_corpus_str = '\n'.join(clean_docs)
 
-    f = open('data/corpus/' + dataset + '.clean.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '.clean.txt', 'w')
+    else:
+        f = open('data/corpus/' + dataset + '.clean.txt', 'w')
     #f = open('data/wiki_long_abstracts_en_text.clean.txt', 'w')
     f.write(clean_corpus_str)
     f.close()
@@ -69,7 +79,10 @@ def prepare(dataset):
     aver_len = 0
     max_len = 0 
 
-    f = open('data/corpus/' + dataset + '.clean.txt', 'r')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '.clean.txt', 'r')
+    else:
+        f = open('data/corpus/' + dataset + '.clean.txt', 'r')
     #f = open('data/wiki_long_abstracts_en_text.txt', 'r')
     lines = f.readlines()
     for line in lines:

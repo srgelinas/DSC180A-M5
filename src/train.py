@@ -157,7 +157,10 @@ def train(dataset):
         len(test_doc_embeddings))
     print(word_embeddings)
 
-    f = open('data/corpus/' + dataset + '_vocab.txt', 'r')
+    if dataset == 'test':
+        f = open('test/testdata/corpus/' + dataset + '_vocab.txt', 'r')
+    else:
+        f = open('data/corpus/' + dataset + '_vocab.txt', 'r')
     words = f.readlines()
     f.close()
 
@@ -170,7 +173,11 @@ def train(dataset):
         word_vectors.append(word + ' ' + word_vector_str)
 
     word_embeddings_str = '\n'.join(word_vectors)
-    f = open('data/output/' + dataset + '_word_vectors.txt', 'w')
+
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '_word_vectors.txt', 'w')
+    else:
+        f = open('data/output/' + dataset + '_word_vectors.txt', 'w')
     f.write(word_embeddings_str)
     f.close()
 
@@ -189,6 +196,9 @@ def train(dataset):
         doc_id += 1
 
     doc_embeddings_str = '\n'.join(doc_vectors)
-    f = open('data/output/' + dataset + '_doc_vectors.txt', 'w')
+    if dataset == 'test':
+        f = open('test/testdata/output/' + dataset + '_doc_vectors.txt', 'w')
+    else:
+        f = open('data/output/' + dataset + '_doc_vectors.txt', 'w')
     f.write(doc_embeddings_str)
     f.close()
